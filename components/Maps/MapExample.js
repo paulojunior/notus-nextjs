@@ -5,12 +5,13 @@ function MapExample() {
   React.useEffect(() => {
     let google = window.google;
     let map = mapRef.current;
-    let lat = "40.748817";
-    let lng = "-73.985428";
-    const myLatlng = new google.maps.LatLng(lat, lng);
+    const myLatlng = new google.maps.LatLng("-30.03506247683422", "-51.17670297008333");
+    const myLatlngC = new google.maps.LatLng("43.750344460088776", "-79.37845837281739");
+    const myLatlngCenter = new google.maps.LatLng("10.547800860310788", "-84.6466600234187");
+
     const mapOptions = {
-      zoom: 12,
-      center: myLatlng,
+      zoom: 2,
+      center: myLatlngCenter,
       scrollwheel: false,
       zoomControl: true,
       styles: [
@@ -63,24 +64,43 @@ function MapExample() {
       position: myLatlng,
       map: map,
       animation: google.maps.Animation.DROP,
-      title: "Notus NextJS!",
+      title: "Trilogy Solutions Brasil!",
+    });
+
+    const markerC = new google.maps.Marker({
+      position: myLatlngC,
+      map: map,
+      animation: google.maps.Animation.DROP,
+      title: "Trilogy Solutions Canada!",
     });
 
     const contentString =
-      '<div class="info-window-content"><h2>Notus NextJS</h2>' +
-      "<p>A free Admin for Tailwind CSS, React, React Hooks, and NextJS.</p></div>";
+      '<div class="info-window-content"><h2>Trilogy Solutions!</h2>' +
+      "<p>Venha tomar um café na nossa sede no Brasil.</p></div>";
+
+    const contentStringC =
+      '<div class="info-window-content"><h2>Trilogy Solutions!</h2>' +
+      "<p>Venha tomar um café na nossa sede no Canadá.</p></div>";
 
     const infowindow = new google.maps.InfoWindow({
       content: contentString,
     });
 
+    const infowindowC = new google.maps.InfoWindow({
+      content: contentStringC,
+    });
+
     google.maps.event.addListener(marker, "click", function () {
       infowindow.open(map, marker);
+    });
+
+    google.maps.event.addListener(markerC, "click", function () {
+      infowindowC.open(map, markerC);
     });
   });
   return (
     <>
-      <div className="relative w-full rounded h-600-px">
+      <div className="relative w-full rounded h-500-px">
         <div className="rounded h-full" ref={mapRef} />
       </div>
     </>
